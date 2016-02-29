@@ -35,8 +35,9 @@
         </config-file>
 <!--
         <dependency id="com.google.playservices" />
-        <dependency id="android.support.v4" />
 -->
+        <dependency id="android.support.v4" />
+
        
         <source-file src="src/com/a42/cordova/plugins/GooglePlayGame.java" target-dir="src/com/a42/cordova/plugins/" />
         <source-file src="src/com/a42/cordova/plugins/GoogleGameService.java" target-dir="src/com/a42/cordova/plugins/" />
@@ -44,7 +45,8 @@
         <source-file src="src/com/a42/cordova/plugins/GameHelper.java" target-dir="src/com/a42/cordova/plugins/" />
         <source-file src="src/com/a42/cordova/plugins/GameHelperUtils.java" target-dir="src/com/a42/cordova/plugins/" />
 
-	<framework src="com.google.android.gms:play-services-games:+" />        
+	<framework src="com.google.android.gms:play-services-games:+" />
+	<framework src="com.google.android.gms:play-services-plus:+" />        
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <meta-data
