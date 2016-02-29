@@ -45,7 +45,9 @@
         <source-file src="src/com/a42/cordova/plugins/GameHelper.java" target-dir="src/com/a42/cordova/plugins/" />
         <source-file src="src/com/a42/cordova/plugins/GameHelperUtils.java" target-dir="src/com/a42/cordova/plugins/" />
 
-	<framework src="com.google.android.gms:play-services:+" />
+	<framework src="com.google.android.gms:play-services-base:+" />
+	<framework src="com.google.android.gms:play-services-games:+" />
+	<framework src="com.google.android.gms:play-services-plus:+" />
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <meta-data
