@@ -15,8 +15,6 @@ package com.a42.cordova.plugins;
  * limitations under the License.
  */
 
-
-
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -30,7 +28,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import com.google.android.gms.appstate.AppStateManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.Api.ApiOptions.NoOptions;
@@ -115,7 +112,6 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     // Api options to use when adding each API, null for none
     GamesOptions mGamesApiOptions = GamesOptions.builder().build();
     PlusOptions mPlusApiOptions = null;
-    NoOptions mAppStateApiOptions = null;
 
     // Google API client object we manage.
     GoogleApiClient mGoogleApiClient = null;
@@ -124,10 +120,9 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     public final static int CLIENT_NONE = 0x00;
     public final static int CLIENT_GAMES = 0x01;
     public final static int CLIENT_PLUS = 0x02;
-    public final static int CLIENT_APPSTATE = 0x04;
     public final static int CLIENT_SNAPSHOT = 0x08;
     public final static int CLIENT_ALL = CLIENT_GAMES | CLIENT_PLUS
-            | CLIENT_APPSTATE | CLIENT_SNAPSHOT;
+            | CLIENT_SNAPSHOT;
 
     // What clients were requested? (bit flags)
     int mRequestedClients = CLIENT_NONE;
@@ -246,15 +241,6 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
     }
 
     /**
-     * Sets the options to pass when setting up the AppState API. Call before
-     * setup().
-     */
-    public void setAppStateApiOptions(NoOptions options) {
-        doApiOptionsPreCheck();
-        mAppStateApiOptions = options;
-    }
-
-    /**
      * Sets the options to pass when setting up the Plus API. Call before
      * setup().
      */
@@ -288,11 +274,6 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
         if (0 != (mRequestedClients & CLIENT_PLUS)) {
             builder.addApi(Plus.API);
             builder.addScope(Plus.SCOPE_PLUS_LOGIN);
-        }
-
-        if (0 != (mRequestedClients & CLIENT_APPSTATE)) {
-            builder.addApi(AppStateManager.API);
-            builder.addScope(AppStateManager.SCOPE_APP_STATE);
         }
 
         if (0 != (mRequestedClients & CLIENT_SNAPSHOT)) {
@@ -855,6 +836,11 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
             return;
         }
 
+        if (mActivity == null) {
+            debugLog("No need to resolve issue, activity does not exist anymore");
+            return;
+        }
+
         debugLog("resolveConnectionResult: trying to resolve result: "
                 + mConnectionResult);
         if (mConnectionResult.hasResolution()) {
@@ -876,6 +862,8 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
             // error.
             debugLog("resolveConnectionResult: result has no resolution. Giving up.");
             giveUp(new SignInFailureReason(mConnectionResult.getErrorCode()));
+            
+            mConnectionResult = null;
         }
     }
 
@@ -1065,3 +1053,4 @@ public class GameHelper implements GoogleApiClient.ConnectionCallbacks,
         mConnectOnStart = connectOnStart;
     }
 }
+
