@@ -33,9 +33,10 @@
         <config-file target="res/values/strings.xml" parent="/resources">
             <string name="app_id">$APP_ID</string>
         </config-file>
-        
+<!-- 
         <dependency id="com.google.playservices" />
         <dependency id="android.support.v4" />
+-->
         
         <source-file src="src/com/a42/cordova/plugins/GooglePlayGame.java" target-dir="src/com/a42/cordova/plugins/" />
         <source-file src="src/com/a42/cordova/plugins/GoogleGameService.java" target-dir="src/com/a42/cordova/plugins/" />
